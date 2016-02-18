@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+  <h1>群发邮件，如促销信息</h1>
+  <h3>发送成功列表</h3>
+    <volist name="succss" id="vo" key="k" >
+		<p>{$k}.{$vo}<br></P>
+	</volist>
+
+  <h3>发送失败列表</h3>
+	<volist name="error" id="ve" key="ke" >
+		<p>{$ke}.<span style="color:red;">{$ve}</span></P>
+	</volist>
+	<h5>共发送{$sum}条数据，成功{$k}条，失败{$ke}条。</h5>
+ </body>
+</html>
