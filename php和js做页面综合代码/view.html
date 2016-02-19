@@ -1,0 +1,35 @@
+<!--公告详情页做上下页显示-->
+<div class="fhxt font28">
+    <!--这里用A标签做了跳转，先判断控制器传过来的$ggxq_lastone是否存在，如果不存在，给一个弹框，让后返回假-->
+    <div class="font32"><a href="__APP__/canyin/msgg.html?gg_id={$ggxq_lastone}" <!--[if condition="!$ggxq_lastone"]-->onclick="alert('没有了');return false;"<!--[/if]-->>上一条</a></div> 
+    <div class="tim">{$ggxq.createTime|date='Y-m-d',###}</div> <div class="xyt font32"><a href="__APP__/canyin/msgg.html?gg_id={$ggxq_next}" <!--[if condition="!$ggxq_next"]-->onclick="alert('没有了');return false;"<!--[/if]-->>下一条</a></div>
+</div>
+
+
+
+<!--Jquery父子级查找-->
+
+<!--[volist name="comment" id="v"]--> 
+<li style=" border:0 " class="ckk">
+	<dl class="gong">
+	   
+		<p class="ckly"><a href="__APP__/member/ydl.html?number={$v['user']['number']}"><i>
+					<img src="/sjjp{$v['user']['head']}" width="100%"/></i>{$v.user.username}</a>
+			 <!--点击回复找P标签的（parents）父级DL标签，下面(children)儿子Div标签-->
+			<a href="#"><span onclick="$(this).parents('dl.gong').children('.ckk').show();">回复</span>
+			</a><a href="#"><span>{$v.addtime}</span></a></p>
+		<p class="group-note"> <span style="display:block;">{$v.content}</span> <!--[volist name="v.huifu" id="vv"]--><span style="display:block; color: #888;">{$vv.user.username}@{$v['user']['username']}&nbsp;{$vv.content}</span> <!--[/volist]--> <a class="zk">展开</a><a class="sq">收起</a></p>
+		<div class="fabiao gong font28 ckk" style="display: none">
+			<form action="__APP__/member/addcommenthf" method="post" id="comment_dian">
+				@{$v['user']['username']}<textarea id="myText" name="content" class="font28" placeholder="仅限五十字以内"></textarea>
+				<input type="hidden" name="uid" value="{$u_id}">
+				<input type="hidden" name="hfid" value="{$v.id}">
+				<input type="hidden" name="number" value="{:I('number')}">
+				<a><button type="submit">发送</button></a>
+			</form>
+		</div>
+	</dl>
+	<div class="clear"></div>
+
+</li>
+<!--[/volist]--> 
