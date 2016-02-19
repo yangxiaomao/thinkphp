@@ -21,6 +21,34 @@
     }
 	
 	
+	//邀请码添加
+    public function add() {
+        for ($i = 1; $i < 100; $i++) {
+            //用md5方式做唯一（32）位邀请码，并用字符串截取出10个
+            $data[] = substr(md5(uniqid(microtime(true), true)), 0, 10);
+            //定义一个数组，值为code
+            $code[] = "code";
+            //将$code里值和$data里的值互换
+            $tmp = array_combine($data, $code);
+            //然后将$tmp的键和值互换
+            $res[$i] = array_flip($tmp);
+            //把100个邀请码赋值操作员
+            $res[$i]['create_by'] = get_uid();
+            $res[$i]['is_delete'] = 0;
+            $res[$i]['create_time'] = time();
+            //必须用这这种方式转变后才能保存到数据库
+            $list[] = $res[$i];
+        }
+        //实例化inrite_code表
+        $inrite_code = D('inrite_code');
+        //将$res数组的值以addAll的方式一次性赋值保存
+        if ($inrite_code->addAll($list)) {
+            $this->success('操作成功');
+        } else {
+            $this->error('操作失败');
+        };
+    }
+	
 	
 	
 	   //邀请码导出Excel
