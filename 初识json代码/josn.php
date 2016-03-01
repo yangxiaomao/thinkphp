@@ -8,8 +8,8 @@ $arr = array(
 );
 $jsonencode = json_encode($arr);
 echo $jsonencode;
-
-/**************************************************************
+/*********************************************************************************************************************************************** next ****/
+/*
 03
  *   在json_encode之前，把所有数组内所有内容都用urlencode()处理一下，然用json_encode()转换成json字符串，最后再用urldecode()将编码过的中文转回来。
 04
@@ -25,7 +25,7 @@ echo $jsonencode;
 09
  *
 10
- *************************************************************/
+*/
  function arrayRecursive(&$array,$function,$apply_to_keys_also = false){
 	  static $recursive_counter = 0;
 	  if(++$recursive_counter > 1000){
@@ -49,7 +49,7 @@ echo $jsonencode;
 	  $recursive_counter--;
  }
 
-/**************************************************************
+/*
 36
  *
 37
@@ -63,7 +63,7 @@ echo $jsonencode;
 41
  *
 42
- *************************************************************/
+ */
 function JSON($array){
 	arrayRecursive($array,'urlencode', true);
 	$json = json_encode($array);
@@ -74,5 +74,31 @@ $array = array(
   'Age'=>25
 );
 echo JSON($array);
+
+/******************************************************************************************************************************************* next ********/
+
+/*定义一个用户类*/
+class user{
+	public $id;
+	public $username;
+	public $passwd;
+	public $email;
+	
+	function __construct($id,$username,$passwd,$email){
+		$this->id =$id;
+		$this->username = $username;
+		$this->passwd = $passwd;
+		$this->email = $email;
+	}
+}
+//实例化两个对象，分别赋不同的值
+$user = new user(1,"anguangli","123456","353125014@qq.com");
+$users = new user(2,"yangxiaomao","456789","yangxiaomao@126.com");
+//输出两个json_encode对象值
+echo json_encode($user)."<br/>";
+echo json_encode($users);
+
+/******************************************************************************************************************************************** next *******/
+
 
 ?>
