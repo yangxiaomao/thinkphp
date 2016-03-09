@@ -133,4 +133,34 @@
         $objWriter->save('php://output'); //文件通过浏览器下载
         exit;
     }
+	//后台首页列表显示数据
+	 public function index(){
+        $users=M("admin");
+        $user=$users->select();
+        $this->assign('user',$user);
+        $this->display();
+        
+    }
+	//一次性删除多条数据方法
+    public function submit(){
+        $getid=$_REQUEST['id'];//获取选择的复选框的值
+        //dump($getid);exit;
+		if (!$getid) $this->error('未选择记录') ;//没选择就提示信息
+		$getids=implode(',',$getid);   
+                //选择一个以上，就用,把值连接起来(1,2,3)这样		
+		$id = is_array($getid)?$getids:$getid;
+                //如果是数组，就把用,连接起来的值覆给$id,否则就覆获取到的没有,号连接起来的值
+		
+              
+                $Result=M("admin")->execute('DELETE FROM db_admin where `id` IN ('.$id.')');
+                //上面和下面的方式都行
+//		$Result= M('admin')->where(array('id'=>array('IN', $id)))->delete();
+		
+		if($Result===false){
+			$this->error('操作失败');
+		}else{
+		$this->success('删除成功',U('Demo/index'));
+	        
+		}
+    }
 ?>

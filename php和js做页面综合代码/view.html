@@ -33,3 +33,117 @@
 
 </li>
 <!--[/volist]--> 
+<!--一次性删除多条数据的视图文件，-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="__PUBLIC__/Css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/Js/jquery.js"></script>
+<script>
+$(function(){
+	$("#zdebox").click(function (){
+
+		var num = $("tbody #debox").length;
+                alert(num);
+		var flag = $(this).attr("checked");
+		var i=0;
+		for(i;i<num;i++){
+			$("tbody #debox").eq(i).attr("checked",flag);
+		}
+		
+	})
+
+})
+</script>
+
+
+</head>
+
+
+<body>
+	<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a href="#">文章列表</a></li>
+    </ul>
+    </div>
+    
+    <div class="rightinfo">
+    
+    <div class="tools">
+    
+    	<ul class="toolbar">
+        <li class="click"><a href="__URL__/form.html"><span><img src="__PUBLIC__/Images/t01.png" /></span>添加</a></li>
+               
+        
+        </ul>
+        
+    </div>
+    
+    <form name="form1" method="post" action="{:U('submit')}">
+    <table class="tablelist">
+    	<thead>
+    	<tr>
+        <th><input id="zdebox" type="checkbox" /></th>
+        <th>编号<i class="sort"><img src="__PUBLIC__/Images/px.gif" /></i></th>
+        <th>管理员账号</th>
+        <th>最后登录时间</th>
+        <th>创建时间</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+		<volist name="user" id="v">
+			<tr>
+				<td><input id="debox" name="id[]" type="checkbox" id="id[]" value="{$v.id}" /></td>
+				<td><{$v.id}></td>
+				<td><{$v.account}></td>
+				<td><{$v.login_time}></td>
+				<td><{$v.create_time}></td>
+				<td><a href="__URL__/updaym?id=<{$arrwzlb.id}>" class="tablelink">编辑</a>     <a href="#" onclick="JavaScript:if(confirm('是否删除')){ href='__URL__/delwz?id=<{$arrwzlb.id}>'}" class="tablelink" >删除</a></td>
+			</tr>
+		</volist>
+          <li><label>&nbsp;</label><input type="submit" class="btn" value="批量删除"/></li>  
+        </tbody>
+    </table>
+    </form>
+   
+    <div class="pagin">
+    	<div class="message">共<i class="blue"><{$count}></i>条记录</div>
+        <{$page}>
+    </div>
+    
+    
+    <div class="tip">
+    	<div class="tiptop"><span>提示信息</span><a></a></div>
+        
+      <div class="tipinfo">
+        <span><img src="__PUBLIC__/Images/ticon.png" /></span>
+        <div class="tipright">
+        <p>是否确认对信息的修改 ？</p>
+        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+        </div>
+        </div>
+        
+        <div class="tipbtn">
+        <input name="" type="button"  class="sure" value="确定" />&nbsp;
+        <input name="" type="button"  class="cancel" value="取消" />
+        </div>
+    
+    </div>
+    
+    
+    
+    
+    </div>
+    
+    <script type="text/javascript">
+	$('.tablelist tbody tr:odd').addClass('odd');
+	</script>
+
+</body>
+
+</html>
