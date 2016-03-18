@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>简易计算机</title>
+</head>
+<body>
+<input type="button" id="result" name="result" onclick="checknum()" value="进入数字游戏、、、、、">
+<script> 
+//获取随机数
+function GetRandomNum(Min,Max)
+{  
+var Range = Max - Min;  
+var Rand = Math.random();  
+return(Min + Math.round(Rand * Range));  
+}  
+//获取文本框内容
+function checknum(){
+var num = GetRandomNum(1,100);
+alert("dnhgn");
+var i;
+for(i=1;i<=10;i++){
+var nums=prompt("猜1到100之间的数字，您只有十次才的机会哦，加油哦、、、、、","");
+if(i==1){
+ if(nums==num){
+         alert("恭喜答对了，您太聪明了");
+   break;
+     }else{
+          if(nums<num){
+       document.write("您已经是第" + i +"次输入，数字有些小了<br>");
+       }else{
+    document.write("您已经是第" + i +"次输入，数字有些大了<br>");
+ }
+}
+}
+if(i>1&&i<=10){
+      if(nums==num){
+         alert("恭喜答对了");
+   break;
+      }else{
+          if(nums<num){
+       document.write("您已经是第" + i +"次输入，数字有些小了<br>");
+       }else{
+    document.write("您已经是第" + i +"次输入，数字有些大了<br>");
+  }
+}
+}
+if(i==10){
+       if(nums!=num){
+       document.write("你已经没机会了，真遗憾！");
+    return false;
+       }
+ }
+}
+}
+</script>
+</body>
+</html>
