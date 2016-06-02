@@ -163,4 +163,146 @@
 	        
 		}
     }
+	/**封装字符串拼接的方法**/
+function insertToStr($str, $i, $substr){
+    //指定插入位置前的字符串
+    $startstr="";
+    for($j=0; $j<$i; $j++){
+        $startstr .= $str[$j];
+    }
+    
+    //指定插入位置后的字符串
+    $laststr="";
+    for ($j=$i; $j<strlen($str); $j++){
+        $laststr .= $str[$j];
+    }
+    
+    //将插入位置前，要插入的，插入位置后三个字符串拼接起来
+    $str = $startstr . $substr . $laststr;
+    
+    //返回结果
+    return $str;
+}
+
+$str="http://limaijiaoyu.oss-cn-beijing.aliyuncs.com/course/course_52/97d4081710529d05d7f9fd5baee9f1c2//U751f/U726910.mp4";
+$newStr=insertToStr($str, 70, "/85ef27670900eb81ceb6f29db87ecb35/");
+echo $newStr;
+
+/**
+ * 模拟post请求的三种方式
+ * **/
+class Request{
+ 
+    public static function post($url, $post_data = '', $timeout = 5){//curl
+ 
+        $ch = curl_init();
+ 
+        curl_setopt ($ch, CURLOPT_URL, $url);
+ 
+        curl_setopt ($ch, CURLOPT_POST, 1);
+ 
+        if($post_data != ''){
+ 
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+ 
+        }
+ 
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
+ 
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+ 
+        curl_setopt($ch, CURLOPT_HEADER, false);
+ 
+        $file_contents = curl_exec($ch);
+        echo $file_contents;
+ 
+        curl_close($ch);
+ 
+        return $file_contents;
+ 
+    }
+ 
+ 
+    public static function post2($url, $data){//file_get_content
+ 
+         
+ 
+        $postdata = http_build_query(
+ 
+            $data
+ 
+        );
+ 
+         
+ 
+        $opts = array('http' =>
+ 
+                      array(
+ 
+                          'method'  => 'POST',
+ 
+                          'header'  => 'Content-type: application/x-www-form-urlencoded',
+ 
+                          'content' => $postdata
+ 
+                      )
+ 
+        );
+ 
+         
+ 
+        $context = stream_context_create($opts);
+ 
+ 
+        $result = file_get_contents($url, false, $context);
+ 
+        return $result;
+ 
+ 
+    }
+ 
+ 
+    public static function post3($host,$path,$query,$others=''){//fsocket
+ 
+ 
+        $post="POST $path HTTP/1.1\r\nHost: $host\r\n";
+ 
+        $post.="Content-type: application/x-www-form-";
+ 
+        $post.="urlencoded\r\n${others}";
+ 
+        $post.="User-Agent: Mozilla 4.0\r\nContent-length: ";
+ 
+        $post.=strlen($query)."\r\nConnection: close\r\n\r\n$query";
+ 
+        $h=fsockopen($host,80);
+ 
+        fwrite($h,$post);
+ 
+        for($a=0,$r='';!$a;){
+ 
+                $b=fread($h,8192);
+ 
+                $r.=$b;
+ 
+                $a=(($b=='')?1:0);
+ 
+            }
+ 
+        fclose($h);
+ 
+        return $r;
+ 
+    }
+}
+$agl = new Request();
+
+for($i=0; $i<5; $i++){
+    $list = array('code'=>rand(1,100),'create_time'=>'456');
+    $post1 = $agl->post("http://demo.anguangli.com/index.php/Home/Ceshi/add.html",$list);
+}
+//echo "<pre>";
+//print_r($agl);
+//echo "</pre>";
+//exit;
 ?>
